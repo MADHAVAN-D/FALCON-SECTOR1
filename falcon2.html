@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FALCON SECTOR 1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --gold: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #050505;
+            color: #fff;
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.05em;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-scrolled {
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 5%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 20px var(--gold);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            width: 100%;
+        }
+        
+        .hero-inner {
+            perspective: 1200px;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .hero-text {
+            max-width: 800px;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        
+        .main-title {
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.85;
+            font-weight: 700;
+            color: white;
+            text-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.6),
+                0 0 80px rgba(255, 215, 0, 0.3);
+            margin-bottom: 1rem;
+            transform: rotateX(12deg) rotateY(8deg);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .main-subtitle {
+            font-size: 1.6rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+            height: 2.2em;
+        }
+        
+        .typing {
+            overflow: hidden;
+            border-right: 3px solid var(--gold);
+            white-space: nowrap;
+            animation: typing-cursor 0.8s step-end infinite;
+        }
+        
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 42px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .btn-gold {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--gold);
+        }
+        
+        .btn-outline:hover {
+            background: var(--gold);
+            color: #000;
+        }
+        
+        .glow-pulse {
+            animation: goldPulse 3s ease-in-out infinite;
+        }
+        
+        section {
+            padding: 140px 5%;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-header span {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+        
+        .section-header h2 {
+            font-size: 3.5rem;
+            margin-top: 1rem;
+            color: white;
+        }
+        
+        /* 3D Cards */
+        .card-container {
+            perspective: 1000px;
+        }
+        
+        .card {
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 24px;
+            padding: 2.5rem;
+            height: 100%;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 80px;
+            height: 300%;
+            background: linear-gradient(transparent, rgba(255, 215, 0, 0.15), transparent);
+            transform: rotate(30deg);
+            transition: all 0.8s;
+            opacity: 0;
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+            left: 120%;
+        }
+        
+        .card:hover {
+            transform: rotateX(12deg) rotateY(12deg) translateY(-20px);
+            border-color: var(--gold);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.6),
+                0 0 60px rgba(255, 215, 0, 0.3);
+        }
+        
+        /* Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+        
+        .portfolio-card {
+            height: 420px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .portfolio-card:hover img {
+            transform: scale(1.12);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 2rem;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .portfolio-card:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px var(--gold);
+        }
+        
+        /* Contact */
+        .contact-form {
+            max-width: 680px;
+            margin: 0 auto;
+            background: rgba(15, 15, 15, 0.7);
+            padding: 3rem;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
+        }
+        
+        footer {
+            padding: 4rem 5% 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes typing-cursor {
+            50% { border-color: transparent; }
+        }
+        
+        @keyframes goldPulse {
+            0%, 100% { box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 10px 60px rgba(255, 215, 0, 0.7); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(15px); }
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="logo title-font">
+            FALCON <span class="logo-dot"></span> SECTOR 1
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <canvas id="particles"></canvas>
+        <div class="parallax-layer" id="layer1"></div>
+        
+        <div class="hero-content">
+            <div class="hero-inner" id="hero-tilt">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span>EST 2025</span>
+                        <span style="width: 4px; height: 4px; background: #ffd700; border-radius: 50%;"></span>
+                        <span>PREMIUM DIGITAL CRAFT</span>
+                    </div>
+                    
+                    <h1 class="main-title title-font" id="hero-title">FALCON<br>SECTOR 1</h1>
+                    
+                    <p class="main-subtitle">
+                        <span id="typing-text" class="typing"></span>
+                    </p>
+                    
+                    <div class="hero-ctas">
+                        <a href="#contact" class="btn btn-gold glow-pulse">BEGIN TRANSMISSION</a>
+                        <a href="#portfolio" class="btn btn-outline">EXPLORE ARCHIVES</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">SCROLL TO DESCEND ↓</div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="section-header">
+            <span>ORIGIN PROTOCOL</span>
+            <h2 class="title-font">THE VISIONARY FORCE</h2>
+        </div>
+        
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: center;">
+            <div>
+                <div style="font-size: 1.35rem; line-height: 1.7; color: #ccc;">
+                    Falcon Sector 1 represents the apex of digital mastery. 
+                    A personal flagship forging immersive worlds for visionary leaders and elite brands.
+                </div>
+                <div style="margin-top: 3rem; display: flex; gap: 3rem;">
+                    <div>
+                        <div style="color: var(--gold); font-size: 2.8rem; font-weight: 700;">12</div>
+                        <div style="color: #888;">Elite Projects</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--gold); font-size: 2.8rem; font-weight: 700;">∞</div>
+                        <div style="color: #888;">Creative Reach</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(145deg, #1a1a1a, #111); padding: 3rem; border-radius: 28px; border: 1px solid rgba(255,215,0,0.15);">
+                <p style="font-size: 1.25rem; color: #bbb;">
+                    From hyper-real websites to magnetic brand systems, I architect digital experiences 
+                    that transcend the ordinary. Every pixel carries intention. Every interaction tells a story.
+                </p>
+                <div style="margin-top: 2rem; color: var(--gold); font-weight: 600;">— Founder &amp; Creative Director</div>
+            </div>
+        </div>
+        
+        <!-- Feature Cards -->
+        <div style="max-width: 1200px; margin: 8rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+            <div class="card-container">
+                <div class="card" id="card1">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">🌐</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--gold);">Web Creation</h3>
+                    <p style="color: #aaa;">Cinematic digital realms engineered for conversion and awe.</p>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="card" id="card2">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">📈</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--gold);">Digital Marketing</h3>
+                    <p style="color: #aaa;">Strategic amplification that cuts through the noise of the cosmos.</p>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="card" id="card3">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">🏆</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--gold);">Brand Building</h3>
+                    <p style="color: #aaa;">Forging legendary identities that command attention across galaxies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" style="background: #0a0a0a;">
+        <div class="section-header">
+            <span>CORE CAPABILITIES</span>
+            <h2 class="title-font">SECTOR OPERATIONS</h2>
+        </div>
+        
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="card-container">
+                <div class="card">
+                    <div style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1.5rem;">01</div>
+                    <h3 style="font-size: 1.65rem; margin-bottom: 1rem;">Website Design</h3>
+                    <p style="color: #bbb;">Immersive, high-performance digital experiences built with precision and cinematic flair.</p>
+                    <ul style="margin-top: 2rem; color: #888; list-style: none; line-height: 2.2;">
+                        <li>→ Custom 3D interfaces</li>
+                        <li>→ Lightning fast loading</li>
+                        <li>→ Motion storytelling</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1.5rem;">02</div>
+                    <h3 style="font-size: 1.65rem; margin-bottom: 1rem;">Instagram Growth</h3>
+                    <p style="color: #bbb;">Organic systems and premium content strategies to dominate social orbits.</p>
+                    <ul style="margin-top: 2rem; color: #888; list-style: none; line-height: 2.2;">
+                        <li>→ Visual system design</li>
+                        <li>→ Community architecture</li>
+                        <li>→ Viral mechanics</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1.5rem;">03</div>
+                    <h3 style="font-size: 1.65rem; margin-bottom: 1rem;">Google Maps Setup</h3>
+                    <p style="color: #bbb;">Local dominance through optimized business profiles and geo-marketing.</p>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div style="color: var(--gold); font-size: 2.8rem; margin-bottom: 1.5rem;">04</div>
+                    <h3 style="font-size: 1.65rem; margin-bottom: 1rem;">Ads &amp; Branding</h3>
+                    <p style="color: #bbb;">High-converting campaigns and complete visual identities that resonate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+        <div class="section-header">
+            <span>SELECTED TRANSMISSIONS</span>
+            <h2 class="title-font">PORTFOLIO ARCHIVE</h2>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-card" onclick="alert('Project deep-dive coming soon...')">
+                <img src="https://picsum.photos/id/1015/800/900" alt="Project 1">
+                <div class="portfolio-overlay">
+                    <div style="color: var(--gold); font-size: 0.9rem;">LUXURY REAL ESTATE</div>
+                    <h4 style="margin: 12px 0 8px;">Aether Estates</h4>
+                    <p style="color: #ccc; font-size: 0.95rem;">Immersive 3D property experience</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-card" onclick="alert('Project deep-dive coming soon...')">
+                <img src="https://picsum.photos/id/201/800/900" alt="Project 2">
+                <div class="portfolio-overlay">
+                    <div style="color: var(--gold); font-size: 0.9rem;">TECH INNOVATION</div>
+                    <h4 style="margin: 12px 0 8px;">Nexus Labs</h4>
+                    <p style="color: #ccc; font-size: 0.95rem;">Futuristic SaaS platform</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-card" onclick="alert('Project deep-dive coming soon...')">
+                <img src="https://picsum.photos/id/237/800/900" alt="Project 3">
+                <div class="portfolio-overlay">
+                    <div style="color: var(--gold); font-size: 0.9rem;">FASHION HOUSE</div>
+                    <h4 style="margin: 12px 0 8px;">Vesper Collective</h4>
+                    <p style="color: #ccc; font-size: 0.95rem;">E-commerce cinematic journey</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section style="background: #111; padding: 100px 5%;">
+        <div class="stats-grid" style="max-width: 1100px; margin: 0 auto;">
+            <div class="stat-item">
+                <h3 id="stat1" data-target="87">0</h3>
+                <p style="color: #aaa;">CLIENT RETENTION %</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat2" data-target="240">0</h3>
+                <p style="color: #aaa;">PROJECTS LAUNCHED</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat3" data-target="4.9">0</h3>
+                <p style="color: #aaa;">AVERAGE RATING</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat4" data-target="19">0</h3>
+                <p style="color: #aaa;">COUNTRIES REACHED</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="background: #050505;">
+        <div class="section-header">
+            <span>ESTABLISH CONNECTION</span>
+            <h2 class="title-font">INITIATE CONTACT</h2>
+        </div>
+        
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>NAME / ORGANIZATION</label>
+                    <input type="text" class="form-input" placeholder="Your designation" required>
+                </div>
+                <div class="form-group">
+                    <label>TRANSMISSION FREQUENCY (EMAIL)</label>
+                    <input type="email" class="form-input" placeholder="you@domain.com" required>
+                </div>
+                <div class="form-group">
+                    <label>MISSION BRIEF</label>
+                    <textarea class="form-input" rows="6" placeholder="Describe your vision..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-gold glow-pulse" style="width: 100%; padding: 20px; font-size: 1.2rem;">
+                    TRANSMIT MESSAGE
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p style="color: #555; font-size: 0.9rem;">© 2026 FALCON SECTOR 1 • ALL RIGHTS RESERVED</p>
+        <p style="margin-top: 1rem; color: #444;">Crafted with cosmic precision</p>
+    </footer>
+
+    <script>
+        // Particle System
+        function createParticles() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            let particles = [];
+            
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2.5 + 0.8;
+                    this.speedX = Math.random() * 0.6 - 0.3;
+                    this.speedY = Math.random() * 0.6 - 0.3;
+                    this.opacity = Math.random() * 0.6 + 0.3;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                    
+                    this.opacity = 0.4 + Math.sin(Date.now() / 800) * 0.3;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity;
+                    ctx.fillStyle = '#ffd700';
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = '#ffd700';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            
+            for (let i = 0; i < 180; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                
+                // Connect nearby particles
+                ctx.strokeStyle = 'rgba(255, 215, 0, 0.08)';
+                ctx.lineWidth = 0.6;
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 120) {
+                            ctx.globalAlpha = (120 - distance) / 120 * 0.15;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                ctx.globalAlpha = 1;
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            animateParticles();
+        }
+        
+        // 3D Tilt for Hero
+        function initHeroTilt() {
+            const heroTilt = document.getElementById('hero-tilt');
+            const heroTitle = document.getElementById('hero-title');
+            
+            let bounds;
+            
+            function rotateElement(e) {
+                bounds = heroTilt.getBoundingClientRect();
+                const x = e.clientX - bounds.left;
+                const y = e.clientY - bounds.top;
+                
+                const rotateX = (y / bounds.height - 0.5) * -25;
+                const rotateY = (x / bounds.width - 0.5) * 30;
+                
+                heroTilt.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                // Subtle title movement
+                heroTitle.style.transform = `perspective(800px) rotateX(${rotateX * 0.6}deg) rotateY(${rotateY * 0.6}deg)`;
+            }
+            
+            heroTilt.addEventListener('mousemove', rotateElement);
+            
+            heroTilt.addEventListener('mouseleave', () => {
+                heroTilt.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                heroTilt.style.transform = `perspective(1200px) rotateX(12deg) rotateY(8deg)`;
+                heroTitle.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                heroTitle.style.transform = `perspective(800px) rotateX(12deg) rotateY(8deg)`;
+                
+                setTimeout(() => {
+                    heroTilt.style.transition = 'transform 0.1s ease-out';
+                }, 600);
+            });
+        }
+        
+        // Card Tilts
+        function initCardTilts() {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 12;
+                    const rotateY = (centerX - x) / 12;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                    }, 600);
+                });
+            });
+        }
+        
+        // Typing Animation
+        function typeWriter() {
+            const textElement = document.getElementById('typing-text');
+            const phrases = [
+                "Architect of digital futures",
+                "Cinematic brand experiences",
+                "Elite digital transformation"
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let currentPhrase = '';
+            
+            function type() {
+                const current = phrases[phraseIndex];
+                
+                if (isDeleting) {
+                    currentPhrase = current.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    currentPhrase = current.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                textElement.textContent = currentPhrase;
+                
+                let speed = 60;
+                
+                if (!isDeleting && charIndex === current.length) {
+                    isDeleting = true;
+                    speed = 1800;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    speed = 400;
+                }
+                
+                setTimeout(type, speed);
+            }
+            
+            type();
+        }
+        
+        // Scroll Reveal
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+            
+            document.querySelectorAll('section').forEach(section => {
+                section.style.transition = 'all 1s cubic-bezier(0.23, 1, 0.32, 1)';
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(60px)';
+                observer.observe(section);
+            });
+        }
+        
+        // Navbar scroll effect
+        function initNavbar() {
+            const nav = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            });
+        }
+        
+        // Counter animations
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-item h3');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        let count = 0;
+                        const increment = target / 80;
+                        
+                        const timer = setInterval(() => {
+                            count += increment;
+                            if (count >= target) {
+                                if (target % 1 === 0) {
+                                    counter.textContent = Math.floor(target);
+                                } else {
+                                    counter.textContent = target.toFixed(1);
+                                }
+                                clearInterval(timer);
+                            } else {
+                                if (target % 1 === 0) {
+                                    counter.textContent = Math.floor(count);
+                                } else {
+                                    counter.textContent = count.toFixed(1);
+                                }
+                            }
+                        }, 30);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.6 });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+        
+        // Form handler
+        function initForm() {
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = this.querySelector('button');
+                const originalText = btn.textContent;
+                
+                btn.style.transition = 'all 0.4s';
+                btn.textContent = 'TRANSMISSION SENT ✓';
+                btn.style.background = '#111';
+                btn.style.color = '#ffd700';
+                
+                setTimeout(() => {
+                    alert("✦ TRANSMISSION RECEIVED ✦\n\nFalcon Sector 1 will make contact within 24 hours.");
+                    form.reset();
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 2200);
+            });
+        }
+        
+        // Initialize everything
+        window.onload = function() {
+            createParticles();
+            initHeroTilt();
+            initCardTilts();
+            typeWriter();
+            initScrollReveal();
+            initNavbar();
+            animateCounters();
+            initForm();
+            
+            // Keyboard escape hint
+            console.log('%cFALCON SECTOR 1 initialized. Welcome, visionary.', 'color: #ffd700; font-family: monospace');
+        };
+        
+        // Mobile touch support for tilt
+        document.addEventListener('touchmove', function(e) {
+            if (e.touches.length > 0 && window.innerWidth < 768) {
+                // Reduced effect on mobile
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
